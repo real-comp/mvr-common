@@ -8,9 +8,7 @@ import java.util.regex.Pattern;
 
 public class LienHolder{
 
-
     private static final Pattern DATE_PATTERN = Pattern.compile("^[0-9]{8}$"); //YYYYMMDD
-
 
     private String id;
     private String rawName;

@@ -12,10 +12,9 @@ public enum TransactionStatus{
     LEGAL_RESTRAINT,
     PRINTING,
     REJECTED,
-    SUPERCEDED,
+    SUPERSEDED,
     STOLEN,
     DELETED,
     OTHER,
     UNKNOWN
-
 }

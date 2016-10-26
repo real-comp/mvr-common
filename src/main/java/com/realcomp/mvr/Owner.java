@@ -6,7 +6,7 @@ import com.realcomp.names.Name;
 
 public class Owner{
 
-
+    private String id;
     private String rawName;
     private Name name;
     private RawAddress rawAddress;
@@ -18,11 +18,21 @@ public class Owner{
     }
 
     public Owner(Owner copy){
+        id = copy.getId();
         rawName = copy.getRawName();
         rawAddress = copy.getRawAddress() == null ? null : new RawAddress(copy.getRawAddress());
         address = copy.getAddress() == null ? null : new Address(copy.getAddress());
         name = copy.getName() == null ? null : new Name(copy.getName());
         ownerEvidenceType = copy.getOwnerEvidenceType();
+        country = copy.getCountry();
+    }
+
+    public String getId(){
+        return id;
+    }
+
+    public void setId(String id){
+        this.id = id;
     }
 
     public String getRawName(){
@@ -84,6 +94,9 @@ public class Owner{
 
         Owner owner = (Owner) o;
 
+        if (id != null ? !id.equals(owner.id) : owner.id != null){
+            return false;
+        }
         if (rawName != null ? !rawName.equals(owner.rawName) : owner.rawName != null){
             return false;
         }
@@ -105,7 +118,8 @@ public class Owner{
 
     @Override
     public int hashCode(){
-        int result = rawName != null ? rawName.hashCode() : 0;
+        int result = id != null ? id.hashCode() : 0;
+        result = 31 * result + (rawName != null ? rawName.hashCode() : 0);
         result = 31 * result + (name != null ? name.hashCode() : 0);
         result = 31 * result + (rawAddress != null ? rawAddress.hashCode() : 0);
         result = 31 * result + (address != null ? address.hashCode() : 0);

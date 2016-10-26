@@ -32,12 +32,8 @@ public class MVRDocument{
     @NotNull
     private TransactionStatus transactionStatus;
 
-    private String transactionCode;
-    private String vin;
-
     @NotNull
     private TreeSet<MVRTransaction> history;
-
 
     @NotNull
     private Map<String,String> attributes;
@@ -68,8 +64,6 @@ public class MVRDocument{
         history = new TreeSet<>();
         attributes = new HashMap<>();
         attributes.putAll(latest.getAttributes());
-        transactionCode = latest.getTransactionCode();
-        vin = latest.getVin();
         guid = MVRDocumentGUID.generate(this);
     }
 
@@ -164,21 +158,6 @@ public class MVRDocument{
         this.transactionStatus = transactionStatus;
     }
 
-    public String getTransactionCode(){
-        return transactionCode;
-    }
-
-    public void setTransactionCode(String transactionCode){
-        this.transactionCode = transactionCode;
-    }
-
-    public String getVin(){
-        return vin;
-    }
-
-    public void setVin(String vin){
-        this.vin = vin;
-    }
 
     @NotNull
     public Map<String, String> getAttributes(){
@@ -247,12 +226,6 @@ public class MVRDocument{
         if (transactionStatus != that.transactionStatus){
             return false;
         }
-        if (transactionCode != null ? !transactionCode.equals(that.transactionCode) : that.transactionCode != null){
-            return false;
-        }
-        if (vin != null ? !vin.equals(that.vin) : that.vin != null){
-            return false;
-        }
         if (!history.equals(that.history)){
             return false;
         }
@@ -270,8 +243,6 @@ public class MVRDocument{
         result = 31 * result + (originalIssueDate != null ? originalIssueDate.hashCode() : 0);
         result = 31 * result + type.hashCode();
         result = 31 * result + transactionStatus.hashCode();
-        result = 31 * result + (transactionCode != null ? transactionCode.hashCode() : 0);
-        result = 31 * result + (vin != null ? vin.hashCode() : 0);
         result = 31 * result + history.hashCode();
         result = 31 * result + attributes.hashCode();
         return result;
