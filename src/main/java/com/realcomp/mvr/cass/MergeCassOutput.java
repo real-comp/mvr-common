@@ -3,10 +3,7 @@ package com.realcomp.mvr.cass;
 import com.realcomp.accuzip.util.JsonFileWriter;
 import com.realcomp.address.Address;
 import com.realcomp.lockstep.OrderedLockstep;
-import com.realcomp.mvr.MVRTransaction;
-import com.realcomp.mvr.MVRTransactionJsonReader;
-import com.realcomp.mvr.MVRTransactionReader;
-import com.realcomp.mvr.Owner;
+import com.realcomp.mvr.*;
 import joptsimple.OptionParser;
 import joptsimple.OptionSet;
 import joptsimple.OptionSpec;
@@ -57,7 +54,18 @@ public class MergeCassOutput extends OrderedLockstep<MVRTransaction, Address>{
     public void emit(List<MVRTransaction> inputs, List<Address> updates) throws IOException{
 
 
-        if (inputs.size() == 2 && inputs.get(0).get
+        
+        if (inputs.size() == 2){
+            //There are occasional instances of the same document id in a single file. There is usually
+            //a Delete followed by another record with valid address information.  When this happens
+            //emit the write the delete transaction and cass merge the other.
+            if (isDeleteWithNoAddress(inputs.get(0))){
+                writer.write(inputs.remove(0));
+            }
+            else if (isDeleteWithNoAddress(inputs.get(1))){
+                writer.write(inputs.remove(1));
+            }
+        }
 
         if (inputs.size() != 1){
             throw new IOException(
@@ -71,6 +79,10 @@ public class MergeCassOutput extends OrderedLockstep<MVRTransaction, Address>{
             saveAddress(tx, address);
         }
         writer.write(tx);
+    }
+
+    private boolean isDeleteWithNoAddress(MVRTransaction tx){
+        return tx.getTransactionStatus() == TransactionStatus.DELETED && tx.getOwners().isEmpty() && tx.getRenewalAddress() == null;
     }
 
     private void saveAddress(@NotNull MVRTransaction tx, @NotNull Address address) throws IOException{
