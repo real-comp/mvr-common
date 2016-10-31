@@ -56,6 +56,9 @@ public class MergeCassOutput extends OrderedLockstep<MVRTransaction, Address>{
     @Override
     public void emit(List<MVRTransaction> inputs, List<Address> updates) throws IOException{
 
+
+        if (inputs.size() == 2 && inputs.get(0).get
+
         if (inputs.size() != 1){
             throw new IOException(
                     String.format(
@@ -67,6 +70,7 @@ public class MergeCassOutput extends OrderedLockstep<MVRTransaction, Address>{
         for (Address address: updates){
             saveAddress(tx, address);
         }
+        writer.write(tx);
     }
 
     private void saveAddress(@NotNull MVRTransaction tx, @NotNull Address address) throws IOException{

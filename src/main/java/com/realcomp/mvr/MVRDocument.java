@@ -3,13 +3,8 @@ package com.realcomp.mvr;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.*;
-import java.util.regex.Pattern;
 
 public class MVRDocument{
-
-    private static final Pattern DATE_PATTERN = Pattern.compile("^[0-9]{8}$"); //YYYYMMDD
-    private static final Pattern MONTH_PATTERN = Pattern.compile("^[0-9]{2}$"); //MM
-    private static final Pattern YEAR_PATTERN = Pattern.compile("^[0-9]{4}$"); //YYYY
 
     @NotNull
     private String guid;
@@ -22,9 +17,6 @@ public class MVRDocument{
 
     @NotNull
     private String id;
-
-    private String latestIssueDate;
-    private String originalIssueDate;
 
     @NotNull
     private DocumentType type;
@@ -60,13 +52,11 @@ public class MVRDocument{
         type = latest.getType();
         transactionStatus = latest.getTransactionStatus();
         guid = MVRDocumentGUID.generate(this);
-        latestIssueDate = latest.getTitleIssueDate();
         history = new TreeSet<>();
         attributes = new HashMap<>();
         attributes.putAll(latest.getAttributes());
         guid = MVRDocumentGUID.generate(this);
     }
-
 
 
     @NotNull
@@ -110,33 +100,6 @@ public class MVRDocument{
         this.state = state;
     }
 
-    public String getLatestIssueDate(){
-        return latestIssueDate;
-    }
-
-    public void setLatestIssueDate(String latestIssueDate){
-        if (latestIssueDate != null && !DATE_PATTERN.matcher(latestIssueDate).matches()){
-            throw new IllegalArgumentException(
-                    "latestIssueDate [" + latestIssueDate + "] does not match pattern YYYYMMDD");
-        }
-        this.latestIssueDate = latestIssueDate;
-    }
-
-    public String getOriginalIssueDate(){
-        return originalIssueDate;
-    }
-
-    public void setOriginalIssueDate(String originalIssueDate){
-        if (originalIssueDate != null && !DATE_PATTERN.matcher(originalIssueDate).matches()){
-            throw new IllegalArgumentException(
-                    "issueDate [" + originalIssueDate + "] does not match pattern YYYYMMDD");
-        }
-        this.originalIssueDate = originalIssueDate;
-    }
-
-
-
-
 
     @NotNull
     public DocumentType getType(){
@@ -157,7 +120,6 @@ public class MVRDocument{
         Objects.requireNonNull(transactionStatus);
         this.transactionStatus = transactionStatus;
     }
-
 
     @NotNull
     public Map<String, String> getAttributes(){
@@ -191,6 +153,10 @@ public class MVRDocument{
         this.history.add(tx);
     }
 
+    public MVRTransaction getLatest(){
+        return history.isEmpty() ? null : history.last();
+    }
+
     @Override
     public boolean equals(Object o){
         if (this == o){
@@ -214,12 +180,6 @@ public class MVRDocument{
         if (!id.equals(that.id)){
             return false;
         }
-        if (latestIssueDate != null ? !latestIssueDate.equals(that.latestIssueDate) : that.latestIssueDate != null){
-            return false;
-        }
-        if (originalIssueDate != null ? !originalIssueDate.equals(that.originalIssueDate) : that.originalIssueDate != null){
-            return false;
-        }
         if (type != that.type){
             return false;
         }
@@ -239,8 +199,6 @@ public class MVRDocument{
         result = 31 * result + source.hashCode();
         result = 31 * result + state.hashCode();
         result = 31 * result + id.hashCode();
-        result = 31 * result + (latestIssueDate != null ? latestIssueDate.hashCode() : 0);
-        result = 31 * result + (originalIssueDate != null ? originalIssueDate.hashCode() : 0);
         result = 31 * result + type.hashCode();
         result = 31 * result + transactionStatus.hashCode();
         result = 31 * result + history.hashCode();

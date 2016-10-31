@@ -565,4 +565,196 @@ public class MVRTransaction implements Comparable<MVRTransaction>{
         return transactionDate.compareTo(other.transactionDate);
     }
 
+    @Override
+    public boolean equals(Object o){
+        if (this == o){
+            return true;
+        }
+        if (!(o instanceof MVRTransaction)){
+            return false;
+        }
+
+        MVRTransaction that = (MVRTransaction) o;
+
+        if (registrationInvalid != that.registrationInvalid){
+            return false;
+        }
+        if (stolen != that.stolen){
+            return false;
+        }
+        if (exempt != that.exempt){
+            return false;
+        }
+        if (governmentOwned != that.governmentOwned){
+            return false;
+        }
+        if (lemonLaw != that.lemonLaw){
+            return false;
+        }
+        if (floodDamage != that.floodDamage){
+            return false;
+        }
+        if (inspectionWaived != that.inspectionWaived){
+            return false;
+        }
+        if (junk != that.junk){
+            return false;
+        }
+        if (reconditioned != that.reconditioned){
+            return false;
+        }
+        if (reconstructed != that.reconstructed){
+            return false;
+        }
+        if (titleRevoked != that.titleRevoked){
+            return false;
+        }
+        if (surrenderedTitle != that.surrenderedTitle){
+            return false;
+        }
+        if (safetySuspension != that.safetySuspension){
+            return false;
+        }
+        if (plateSeized != that.plateSeized){
+            return false;
+        }
+        if (stickerSeized != that.stickerSeized){
+            return false;
+        }
+        if (heavyUseTax != that.heavyUseTax){
+            return false;
+        }
+        if (additionalLienHolders != that.additionalLienHolders){
+            return false;
+        }
+        if (!id.equals(that.id)){
+            return false;
+        }
+        if (!state.equals(that.state)){
+            return false;
+        }
+        if (!source.equals(that.source)){
+            return false;
+        }
+        if (!transactionDate.equals(that.transactionDate)){
+            return false;
+        }
+        if (type != that.type){
+            return false;
+        }
+        if (transactionStatus != that.transactionStatus){
+            return false;
+        }
+        if (titleIssueDate != null ? !titleIssueDate.equals(that.titleIssueDate) : that.titleIssueDate != null){
+            return false;
+        }
+        if (bondedTitleType != that.bondedTitleType){
+            return false;
+        }
+        if (plate != null ? !plate.equals(that.plate) : that.plate != null){
+            return false;
+        }
+        if (registrationClassCode != null ? !registrationClassCode.equals(that.registrationClassCode) : that.registrationClassCode != null){
+            return false;
+        }
+        if (registrationCounty != null ? !registrationCounty.equals(that.registrationCounty) : that.registrationCounty != null){
+            return false;
+        }
+        if (registrationEffectiveDate != null ? !registrationEffectiveDate.equals(that.registrationEffectiveDate) : that.registrationEffectiveDate != null){
+            return false;
+        }
+        if (registrationExpMonth != null ? !registrationExpMonth.equals(that.registrationExpMonth) : that.registrationExpMonth != null){
+            return false;
+        }
+        if (registrationExpYear != null ? !registrationExpYear.equals(that.registrationExpYear) : that.registrationExpYear != null){
+            return false;
+        }
+        if (vehicle != null ? !vehicle.equals(that.vehicle) : that.vehicle != null){
+            return false;
+        }
+        if (rawVehicleLocation != null ? !rawVehicleLocation.equals(that.rawVehicleLocation) : that.rawVehicleLocation != null){
+            return false;
+        }
+        if (vehicleLocation != null ? !vehicleLocation.equals(that.vehicleLocation) : that.vehicleLocation != null){
+            return false;
+        }
+        if (salePrice != null ? !salePrice.equals(that.salePrice) : that.salePrice != null){
+            return false;
+        }
+        if (saleDate != null ? !saleDate.equals(that.saleDate) : that.saleDate != null){
+            return false;
+        }
+        if (surrenderedTitleDate != null ? !surrenderedTitleDate.equals(that.surrenderedTitleDate) : that.surrenderedTitleDate != null){
+            return false;
+        }
+        if (!owners.equals(that.owners)){
+            return false;
+        }
+        if (rawRenewalName != null ? !rawRenewalName.equals(that.rawRenewalName) : that.rawRenewalName != null){
+            return false;
+        }
+        if (renewalName != null ? !renewalName.equals(that.renewalName) : that.renewalName != null){
+            return false;
+        }
+        if (renewalRawAddress != null ? !renewalRawAddress.equals(that.renewalRawAddress) : that.renewalRawAddress != null){
+            return false;
+        }
+        if (renewalAddress != null ? !renewalAddress.equals(that.renewalAddress) : that.renewalAddress != null){
+            return false;
+        }
+        if (!lienHolders.equals(that.lienHolders)){
+            return false;
+        }
+        return attributes != null ? attributes.equals(that.attributes) : that.attributes == null;
+
+    }
+
+    @Override
+    public int hashCode(){
+        int result = id.hashCode();
+        result = 31 * result + state.hashCode();
+        result = 31 * result + source.hashCode();
+        result = 31 * result + transactionDate.hashCode();
+        result = 31 * result + type.hashCode();
+        result = 31 * result + transactionStatus.hashCode();
+        result = 31 * result + (titleIssueDate != null ? titleIssueDate.hashCode() : 0);
+        result = 31 * result + (bondedTitleType != null ? bondedTitleType.hashCode() : 0);
+        result = 31 * result + (plate != null ? plate.hashCode() : 0);
+        result = 31 * result + (registrationClassCode != null ? registrationClassCode.hashCode() : 0);
+        result = 31 * result + (registrationCounty != null ? registrationCounty.hashCode() : 0);
+        result = 31 * result + (registrationEffectiveDate != null ? registrationEffectiveDate.hashCode() : 0);
+        result = 31 * result + (registrationExpMonth != null ? registrationExpMonth.hashCode() : 0);
+        result = 31 * result + (registrationExpYear != null ? registrationExpYear.hashCode() : 0);
+        result = 31 * result + (registrationInvalid ? 1 : 0);
+        result = 31 * result + (vehicle != null ? vehicle.hashCode() : 0);
+        result = 31 * result + (rawVehicleLocation != null ? rawVehicleLocation.hashCode() : 0);
+        result = 31 * result + (vehicleLocation != null ? vehicleLocation.hashCode() : 0);
+        result = 31 * result + (salePrice != null ? salePrice.hashCode() : 0);
+        result = 31 * result + (saleDate != null ? saleDate.hashCode() : 0);
+        result = 31 * result + (stolen ? 1 : 0);
+        result = 31 * result + (exempt ? 1 : 0);
+        result = 31 * result + (governmentOwned ? 1 : 0);
+        result = 31 * result + (lemonLaw ? 1 : 0);
+        result = 31 * result + (floodDamage ? 1 : 0);
+        result = 31 * result + (inspectionWaived ? 1 : 0);
+        result = 31 * result + (junk ? 1 : 0);
+        result = 31 * result + (reconditioned ? 1 : 0);
+        result = 31 * result + (reconstructed ? 1 : 0);
+        result = 31 * result + (titleRevoked ? 1 : 0);
+        result = 31 * result + (surrenderedTitle ? 1 : 0);
+        result = 31 * result + (surrenderedTitleDate != null ? surrenderedTitleDate.hashCode() : 0);
+        result = 31 * result + (safetySuspension ? 1 : 0);
+        result = 31 * result + (plateSeized ? 1 : 0);
+        result = 31 * result + (stickerSeized ? 1 : 0);
+        result = 31 * result + (heavyUseTax ? 1 : 0);
+        result = 31 * result + owners.hashCode();
+        result = 31 * result + (rawRenewalName != null ? rawRenewalName.hashCode() : 0);
+        result = 31 * result + (renewalName != null ? renewalName.hashCode() : 0);
+        result = 31 * result + (renewalRawAddress != null ? renewalRawAddress.hashCode() : 0);
+        result = 31 * result + (renewalAddress != null ? renewalAddress.hashCode() : 0);
+        result = 31 * result + lienHolders.hashCode();
+        result = 31 * result + (additionalLienHolders ? 1 : 0);
+        result = 31 * result + (attributes != null ? attributes.hashCode() : 0);
+        return result;
+    }
 }

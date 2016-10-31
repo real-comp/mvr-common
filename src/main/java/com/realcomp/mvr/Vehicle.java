@@ -16,13 +16,14 @@ public class Vehicle{
 
     private String vin;
     private String bodyTypeCode;
+    private VehicleClass vehicleClass;
     private String vehicleClassCode;
     private String make;
     private String model;
     private String modelYear;
-    private String colorPrimary;
-    private String colorSecondary;
-    private String vehicleTonage;
+    private Color primaryColor;
+    private Color secondaryColor;
+    private float tonage;
     private String bodyVin;
     private int length;
     private int emptyWeight;
@@ -95,28 +96,29 @@ public class Vehicle{
         this.modelYear = modelYear;
     }
 
-    public String getColorPrimary(){
-        return colorPrimary;
+    public Color getPrimaryColor(){
+        return primaryColor;
     }
 
-    public void setColorPrimary(String colorPrimary){
-        this.colorPrimary = colorPrimary;
+    public void setPrimaryColor(Color primaryColor){
+        this.primaryColor = primaryColor;
     }
 
-    public String getColorSecondary(){
-        return colorSecondary;
+    public Color getSecondaryColor(){
+        return secondaryColor;
     }
 
-    public void setColorSecondary(String colorSecondary){
-        this.colorSecondary = colorSecondary;
+    public void setSecondaryColor(Color secondaryColor){
+        this.secondaryColor = secondaryColor;
     }
 
-    public String getVehicleTonage(){
-        return vehicleTonage;
+
+    public float getTonage(){
+        return tonage;
     }
 
-    public void setVehicleTonage(String vehicleTonage){
-        this.vehicleTonage = vehicleTonage;
+    public void setTonage(float tonage){
+        this.tonage = tonage;
     }
 
     public String getBodyVin(){
@@ -134,6 +136,7 @@ public class Vehicle{
     public void setLength(int length){
         this.length = length;
     }
+
 
     public int getEmptyWeight(){
         return emptyWeight;
@@ -192,6 +195,14 @@ public class Vehicle{
     }
 
 
+    public VehicleClass getVehicleClass(){
+        return vehicleClass;
+    }
+
+    public void setVehicleClass(VehicleClass vehicleClass){
+        this.vehicleClass = vehicleClass;
+    }
+
     public Map<String, String> getAttributes(){
         return attributes;
     }
@@ -207,7 +218,6 @@ public class Vehicle{
         return attributes.put(key, value);
     }
 
-
     @Override
     public boolean equals(Object o){
         if (this == o){
@@ -219,6 +229,9 @@ public class Vehicle{
 
         Vehicle vehicle = (Vehicle) o;
 
+        if (Float.compare(vehicle.tonage, tonage) != 0){
+            return false;
+        }
         if (length != vehicle.length){
             return false;
         }
@@ -237,6 +250,9 @@ public class Vehicle{
         if (bodyTypeCode != null ? !bodyTypeCode.equals(vehicle.bodyTypeCode) : vehicle.bodyTypeCode != null){
             return false;
         }
+        if (vehicleClass != vehicle.vehicleClass){
+            return false;
+        }
         if (vehicleClassCode != null ? !vehicleClassCode.equals(vehicle.vehicleClassCode) : vehicle.vehicleClassCode != null){
             return false;
         }
@@ -249,13 +265,10 @@ public class Vehicle{
         if (modelYear != null ? !modelYear.equals(vehicle.modelYear) : vehicle.modelYear != null){
             return false;
         }
-        if (colorPrimary != null ? !colorPrimary.equals(vehicle.colorPrimary) : vehicle.colorPrimary != null){
+        if (primaryColor != vehicle.primaryColor){
             return false;
         }
-        if (colorSecondary != null ? !colorSecondary.equals(vehicle.colorSecondary) : vehicle.colorSecondary != null){
-            return false;
-        }
-        if (vehicleTonage != null ? !vehicleTonage.equals(vehicle.vehicleTonage) : vehicle.vehicleTonage != null){
+        if (secondaryColor != vehicle.secondaryColor){
             return false;
         }
         if (bodyVin != null ? !bodyVin.equals(vehicle.bodyVin) : vehicle.bodyVin != null){
@@ -281,13 +294,14 @@ public class Vehicle{
     public int hashCode(){
         int result = vin != null ? vin.hashCode() : 0;
         result = 31 * result + (bodyTypeCode != null ? bodyTypeCode.hashCode() : 0);
+        result = 31 * result + (vehicleClass != null ? vehicleClass.hashCode() : 0);
         result = 31 * result + (vehicleClassCode != null ? vehicleClassCode.hashCode() : 0);
         result = 31 * result + (make != null ? make.hashCode() : 0);
         result = 31 * result + (model != null ? model.hashCode() : 0);
         result = 31 * result + (modelYear != null ? modelYear.hashCode() : 0);
-        result = 31 * result + (colorPrimary != null ? colorPrimary.hashCode() : 0);
-        result = 31 * result + (colorSecondary != null ? colorSecondary.hashCode() : 0);
-        result = 31 * result + (vehicleTonage != null ? vehicleTonage.hashCode() : 0);
+        result = 31 * result + (primaryColor != null ? primaryColor.hashCode() : 0);
+        result = 31 * result + (secondaryColor != null ? secondaryColor.hashCode() : 0);
+        result = 31 * result + (tonage != +0.0f ? Float.floatToIntBits(tonage) : 0);
         result = 31 * result + (bodyVin != null ? bodyVin.hashCode() : 0);
         result = 31 * result + length;
         result = 31 * result + emptyWeight;
