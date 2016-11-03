@@ -29,10 +29,8 @@ public class MVRReducer extends Reducer<Text,Text,NullWritable,Text>{
         jackson = new ObjectMapper();
         jackson.setSerializationInclusion(JsonInclude.Include.NON_NULL);
         jackson.setSerializationInclusion(JsonInclude.Include.NON_EMPTY);
-
         DateFormat df = new SimpleDateFormat("yyyyMMdd");
         buildDate = df.format(new Date());
-
     }
 
 
@@ -40,7 +38,6 @@ public class MVRReducer extends Reducer<Text,Text,NullWritable,Text>{
     protected void reduce(Text key, Iterable<Text> values, Context context) throws IOException, InterruptedException{
         List<MVRTransaction> transactions = convertFromHadoopWritable(values);
         int count = transactions.size();
-        logger.info(String.format("Found %d MVRTransactions for %s", count, key.toString()));
         sortByTransactionDate(transactions);
         transactions = filterDeletions(transactions);
         if (!transactions.isEmpty()) {
@@ -68,25 +65,34 @@ public class MVRReducer extends Reducer<Text,Text,NullWritable,Text>{
      */
     private List<MVRTransaction> filterDeletions(List<MVRTransaction> sorted) {
         assert (sorted != null);
-
         List<MVRTransaction> result = new ArrayList<>();
         Iterator<MVRTransaction> itr = sorted.iterator();
         while (itr.hasNext()){
             MVRTransaction tx = itr.next();
-            if (tx.getTransactionStatus() == TransactionStatus.DELETED && itr.hasNext()){
+            //if (tx.getTransactionStatus() == TransactionStatus.DELETED && itr.hasNext()){
+            if (tx.getTransactionStatus() == TransactionStatus.DELETED){
+                //this indicates that the document number is being reused or is a test record
                 result.clear();
             }
             else {
                 result.add(tx);
             }
         }
+
+        /*
+        //if the collection contains only deletes, then filter all transactions data.
+        long nonDeleteCount = result.stream().filter(t -> t.getTransactionStatus() != TransactionStatus.DELETED).count();
+        if (nonDeleteCount == 0){
+            result.clear();
+        }
+        */
+
         return result;
     }
 
     private void sortByTransactionDate(List<MVRTransaction> transactions) {
         Collections.sort(transactions, new OrderByTransactionDate());
     }
-
 
     private List<MVRTransaction> convertFromHadoopWritable(Iterable<Text> values) throws IOException {
         List<MVRTransaction> records = new ArrayList<>();

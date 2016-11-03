@@ -705,8 +705,11 @@ public class MVRTransaction implements Comparable<MVRTransaction>{
         if (!lienHolders.equals(that.lienHolders)){
             return false;
         }
-        return attributes != null ? attributes.equals(that.attributes) : that.attributes == null;
+        if (attributes != null ? !attributes.equals(that.attributes) : that.attributes != null){
+            return false;
+        }
 
+        return true;
     }
 
     @Override

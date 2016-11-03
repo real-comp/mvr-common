@@ -5,6 +5,7 @@ import com.realcomp.data.hadoop.fs.Paths;
 import com.realcomp.data.hadoop.fs.PathsFactory;
 import joptsimple.OptionParser;
 import joptsimple.OptionSet;
+import joptsimple.OptionSpec;
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.conf.Configured;
 import org.apache.hadoop.fs.Path;
@@ -234,45 +235,34 @@ public class MVRBuild extends Configured implements Tool{
 
 
     public static void main(String[] args) throws Exception {
-
-        OptionParser parser = new OptionParser() {
-            {
-                acceptsAll(Arrays.asList(new String[]{"i", "in"}))
-                        .withRequiredArg()
-                        .describedAs("HDFS/S3 input path")
-                        .required();
-                acceptsAll(Arrays.asList(new String[]{"o", "out"}))
-                        .withRequiredArg()
-                        .describedAs("HDFS/S3 output path")
-                        .required();
-                acceptsAll(Arrays.asList(new String[]{"a", "attr"}))
-                        .withOptionalArg()
-                        .describedAs("attribute(s) set in every Record (i.e., valueDescription:2011 Certified)");
-            }
-        };
+        String today = new SimpleDateFormat("yyyyMMdd").format(new Date());
+        OptionParser parser = new OptionParser();
+        OptionSpec<String> in = parser.acceptsAll(Arrays.asList(new String[]{"i","in"}))
+                .withRequiredArg().describedAs("HDFS/S3 input path")
+                .defaultsTo("s3://rc-data-raw/mvr/tx/rc/");
+        OptionSpec<String> out = parser.acceptsAll(Arrays.asList(new String[]{"o","out"}))
+                .withRequiredArg().describedAs("HDFS/S3 ouptput path")
+                .defaultsTo("s3://rc-build-output/mvr/tx/rc/" + today);
+        OptionSpec<String> attr = parser.acceptsAll(Arrays.asList(new String[]{"a","attr"}))
+                .withRequiredArg()
+                .describedAs("attribute(s) set in every Record (i.e., valueDescription:2011 Certified)");
+        OptionSpec help = parser.acceptsAll(Arrays.asList("?", "help"), "show help");
 
         int result = 1;
-
-        if (args.length == 0) {
+        OptionSet options = parser.parse(args);
+        if (options.has(help)){
             parser.printHelpOn(System.err);
         }
-        else {
-            OptionSet options = parser.parse(args);
+        else{
             MVRBuild mvrBuild = new MVRBuild();
-            String inputPath = (String) options.valueOf("i");
-            String outputPath = (String) options.valueOf("o");
-            mvrBuild.addInputPath(new Path(inputPath));
-            mvrBuild.setOutputPath(new Path(outputPath));
-
-            for (String attribute : (List<String>) options.valuesOf("a")) {
+            mvrBuild.addInputPath(new Path(options.valueOf(in)));
+            mvrBuild.setOutputPath(new Path(options.valueOf(out)));
+            for (String attribute : options.valuesOf(attr)) {
                 int pos = attribute.indexOf(":");
                 mvrBuild.setAttribute(attribute.substring(0, pos), attribute.substring(pos + 1));
             }
-
             result = ToolRunner.run(mvrBuild, args);
         }
-
         System.exit(result);
     }
-
 }

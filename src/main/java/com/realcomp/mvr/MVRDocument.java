@@ -1,5 +1,6 @@
 package com.realcomp.mvr;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.*;
@@ -153,6 +154,7 @@ public class MVRDocument{
         this.history.add(tx);
     }
 
+    @JsonIgnore
     public MVRTransaction getLatest(){
         return history.isEmpty() ? null : history.last();
     }
