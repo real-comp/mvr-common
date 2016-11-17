@@ -1,4 +1,4 @@
-# names-common
+# mvr-common
 An collection of POJOs for Vehicles and Vehicle Titles.
 
 MVR = Motor Vehicle Record
