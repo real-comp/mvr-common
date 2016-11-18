@@ -9,7 +9,7 @@ MVR = Motor Vehicle Record
 <dependency>
     <groupId>com.real-comp</groupId>
     <artifactId>mvr-common</artifactId>
-    <version>0.0.1</version>
+    <version>0.0.2</version>
     <type>jar</type>
 </dependency>
 ```
