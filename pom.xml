@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.real-comp</groupId>
     <artifactId>mvr-common</artifactId>
-    <version>0.0.3-SNAPSHOT</version>
+    <version>0.0.2-SNAPSHOT</version>
     <name>mvr-common</name>
     <url>https://github.com/real-comp/mvr-common</url>
     <description>An collection of POJOs dealing with Vehicles and Vehicle Titles.</description>
