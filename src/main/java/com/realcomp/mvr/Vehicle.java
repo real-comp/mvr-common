@@ -44,6 +44,30 @@ public class Vehicle{
         attributes = new HashMap<>();
     }
 
+    public Vehicle(Vehicle copy){
+        vin = copy.vin;
+        bodyTypeCode = copy.bodyTypeCode;
+        vehicleClass = copy.vehicleClass;
+        vehicleClassCode = copy.vehicleClassCode;
+        make = copy.make;
+        model = copy.model;
+        modelYear = copy.modelYear;
+        primaryColor = copy.primaryColor;
+        secondaryColor = copy.secondaryColor;
+        tonage = copy.tonage;
+        bodyVin = copy.bodyVin;
+        length = copy.length;
+        emptyWeight = copy.emptyWeight;
+        grossWeight = copy.grossWeight;
+        fuelType = copy.fuelType;
+        fixedEquipment = copy.fixedEquipment;
+        trailerType = copy.trailerType;
+        odometerBrand = copy.odometerBrand;
+        odometerReading = copy.odometerReading;
+        attributes = new HashMap<>();
+        attributes.putAll(copy.getAttributes());
+    }
+
     public String getVin(){
         return vin;
     }

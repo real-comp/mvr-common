@@ -45,7 +45,6 @@ public class MVRTransaction implements Comparable<MVRTransaction>{
     private String titleIssueDate;
     private BondedTitleType bondedTitleType = BondedTitleType.NONE;
 
-
     private String plate;
     private String registrationClassCode;
     private String registrationCounty;
@@ -59,8 +58,6 @@ public class MVRTransaction implements Comparable<MVRTransaction>{
     private Address vehicleLocation;
     private String salePrice;
     private String saleDate;
-
-
 
     private boolean stolen;
     private boolean exempt;
@@ -132,6 +129,60 @@ public class MVRTransaction implements Comparable<MVRTransaction>{
         attributes = new HashMap<>();
         owners = new ArrayList<>();
         lienHolders = new ArrayList<>();
+    }
+
+    public MVRTransaction(MVRTransaction copy){
+        Objects.requireNonNull(copy);
+        id = copy.id;
+        state = copy.state;
+        transactionDate = copy.transactionDate;
+        source = copy.source;
+        type = copy.type;
+        transactionStatus = copy.getTransactionStatus();
+        attributes = new HashMap<>();
+        attributes.putAll(copy.getAttributes());
+        owners = new ArrayList<>();
+        for (Owner owner: copy.getOwners()){
+            owners.add(new Owner(owner));
+        }
+        lienHolders = new ArrayList<>();
+        for (LienHolder lienHolder: copy.getLienHolders()){
+            lienHolders.add(new LienHolder(lienHolder));
+        }
+        rawRenewalName = copy.getRawRenewalName();
+        renewalName = copy.getRenewalName() == null ? null : new Name(copy.getRawRenewalName());
+        renewalRawAddress = copy.getRenewalRawAddress() == null ? null : new RawAddress(copy.getRenewalRawAddress());
+        additionalLienHolders = copy.additionalLienHolders;
+        titleIssueDate = copy.titleIssueDate;
+        bondedTitleType = copy.bondedTitleType;
+        plate = copy.plate;
+        registrationClassCode = copy.registrationClassCode;
+        registrationCounty = copy.registrationCounty;
+        registrationEffectiveDate = copy.registrationEffectiveDate;
+        registrationExpMonth = copy.registrationExpMonth;
+        registrationExpYear = copy.registrationExpYear;
+        registrationInvalid = copy.registrationInvalid;
+        vehicle = new Vehicle(copy.vehicle);
+        rawVehicleLocation = copy.rawVehicleLocation;
+        vehicleLocation = copy.vehicleLocation;
+        salePrice = copy.salePrice;
+        saleDate = copy.saleDate;
+        stolen = copy.stolen;
+        exempt = copy.exempt;
+        governmentOwned = copy.governmentOwned;
+        lemonLaw = copy.lemonLaw;
+        floodDamage = copy.floodDamage;
+        inspectionWaived = copy.inspectionWaived;
+        junk = copy.junk;
+        reconditioned = copy.reconditioned;
+        reconstructed = copy.reconstructed;
+        titleRevoked = copy.titleRevoked;
+        surrenderedTitle = copy.surrenderedTitle;
+        surrenderedTitleDate = copy.surrenderedTitleDate;
+        safetySuspension = copy.safetySuspension;
+        plateSeized = copy.plateSeized;
+        stickerSeized = copy.stickerSeized;
+        heavyUseTax = copy.heavyUseTax;
     }
 
     @NotNull
